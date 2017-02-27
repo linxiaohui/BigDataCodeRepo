@@ -1,0 +1,10 @@
+*.class
+*.iml
+.classpath
+.project
+.settings/
+.idea/
+.vscode/
+.cache-main
+target/
+
