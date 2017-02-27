@@ -9,8 +9,19 @@
 ## 项目结构
    每个项目一个Maven工程
 
+## 编译
+```
+mvn package
+```
+
 ## 导入Eclipse
-以scala代码为例
 ```
-File => New => Scala Project => Location选择项目目录
+mvn eclipse:eclipse
+File => Import => General => Existing Project Into WorkSpace => Select Root Directory
 ```
+
+## 导入Intellij IDEA
+```
+Open
+```
+
