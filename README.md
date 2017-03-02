@@ -19,6 +19,8 @@ mvn package
 mvn eclipse:eclipse
 File => Import => General => Existing Project Into WorkSpace => Select Root Directory
 ```
+导入Eclipse后, 右键项目 => Configure => Convert to Maven Project， 这样在Eclipse中可以 Run As
+
 
 ## 导入Intellij IDEA
 ```
