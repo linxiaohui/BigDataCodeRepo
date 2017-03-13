@@ -1,10 +1,9 @@
 package repo.bigdata.netty;
 
-import java.net.InetSocketAddress;
-
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -17,6 +16,20 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.CharsetUtil;
 
 class HelloWorldHandler extends ChannelInboundHandlerAdapter {
+	
+    @Override
+    public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+    	Channel incoming = ctx.channel();
+        System.out.println("[Remote-" + incoming.remoteAddress() + "] connected");
+    }
+    
+    @Override
+	public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        Channel incoming = ctx.channel();
+		System.out.println("[Remote-"+incoming.remoteAddress()+"] online");
+	}
+	
+	
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		ByteBuf buf = (ByteBuf) msg;
@@ -63,11 +76,11 @@ public class HelloWorldServer {
 		/* 设置并绑定服务端Channel */
 		bootstrap.channel(NioServerSocketChannel.class);
 		/* 添加设置ChannelHandler, add a single ChannelHandler*/
-		bootstrap.childHandler(new HelloWorldHandler());
-
+		//bootstrap.childHandler(new HelloWorldHandler());
 		bootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
 			@Override
 			public void initChannel(SocketChannel ch) throws Exception {
+				System.out.println("Server Bootstrap");
 				ch.pipeline().addLast(new HelloWorldHandler());
 			}
 		});
