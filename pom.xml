@@ -18,5 +18,8 @@
 	<module>kafka</module>
 	<module>storm</module>
 	<module>zookeeper</module>
+	<module>elasticsearch</module>
+	<module>quartz</module>
+	<module>netty</module>
 </modules>
 </project>
