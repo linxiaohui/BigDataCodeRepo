@@ -63,6 +63,16 @@ class HelloWorldHandler extends ChannelInboundHandlerAdapter {
 
 }
 
+class BossHandler extends ChannelInboundHandlerAdapter {
+	@Override
+	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+		System.out.println("BossHandler invoked "+msg);
+		//ctx.write(msg);
+		ctx.fireChannelRead(msg);
+	}
+	
+}
+
 public class HelloWorldServer {
 
 	public static void main(String[] args) throws InterruptedException {
@@ -76,7 +86,7 @@ public class HelloWorldServer {
 		/* 设置并绑定服务端Channel */
 		bootstrap.channel(NioServerSocketChannel.class);
 		/* 添加设置ChannelHandler, add a single ChannelHandler*/
-		//bootstrap.childHandler(new HelloWorldHandler());
+		bootstrap.handler(new BossHandler());
 		bootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
 			@Override
 			public void initChannel(SocketChannel ch) throws Exception {
@@ -89,7 +99,9 @@ public class HelloWorldServer {
 		try {
 			/* 绑定并启动监听端口 */
 			ChannelFuture f = bootstrap.bind(12345).sync();
+			System.out.println("bind sync returned");
 			f.channel().closeFuture().sync();
+			System.out.println("close sync returned");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
